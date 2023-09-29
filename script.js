@@ -1,16 +1,12 @@
-function onDOMLoad() {
-  // Check if the body tag has any children
-  if (document.body.childElementCount === 0) {
-    // Create a new paragraph element
-    var paragraph = document.createElement("p");
-    
-    // Set the text content of the paragraph
-    paragraph.textContent = "DOM load success";
-    
-    // Append the paragraph to the body of the document
-    document.body.appendChild(paragraph);
-  }
-}
+describe("DOM Test", () => {
+  it("Should check for absence of script element in body", () => {
+    // Visit the web page you want to test
+    cy.visit("http://localhost:3000"); // Replace with your actual URL
 
-// Attach the onDOMLoad function to the DOMContentLoaded event
-document.addEventListener("DOMContentLoaded", onDOMLoad);
+    // Wait for the DOM to be fully loaded
+    cy.document().should("have.property", "readyState").should("equal", "complete");
+
+    // Check if there are no script elements within the body
+    cy.get("body").find("script").should("not.exist");
+  });
+});
